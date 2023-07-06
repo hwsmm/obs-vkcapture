@@ -1,7 +1,8 @@
 %ifnarch %{ix86}
-Name: obs-vkcapture
+Name:       obs-vkcapture
+Recommends: obs-vkcapture-32bit
 %else
-Name: obs-vkcapture-32bit
+Name:       obs-vkcapture-32bit
 %endif
 
 Version: 1.4.0
@@ -14,7 +15,9 @@ VCS:    {{{ git_dir_vcs }}}
 Source: {{{ git_dir_pack }}}
 
 BuildRequires: cmake gcc gcc-c++
+%ifnarch %{ix86}
 BuildRequires: cmake(libobs)
+%endif
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(egl)
@@ -40,7 +43,7 @@ OBS plugin for Vulkan/OpenGL game capture on Linux.
 %install
 %cmake_install
 %ifarch %{ix86}
-rm -r %{buildroot}/%{_datadir} %{buildroot}/%{_bindir} %{buildroot}/%{_libdir}/obs-plugins
+rm -r %{buildroot}/%{_datadir}/obs %{buildroot}/%{_bindir} %{buildroot}/%{_libdir}/obs-plugins
 %endif
 
 %files
@@ -57,11 +60,12 @@ rm -r %{buildroot}/%{_datadir} %{buildroot}/%{_bindir} %{buildroot}/%{_libdir}/o
 %{_datadir}/obs/obs-plugins/linux-vkcapture/locale/de-DE.ini
 %{_datadir}/obs/obs-plugins/linux-vkcapture/locale/en-US.ini
 %{_datadir}/vulkan/implicit_layer.d/obs_vkcapture_64.json
-%{_datadir}/vulkan/implicit_layer.d/obs_vkcapture_32.json
 %{_bindir}/obs-vkcapture
 %{_bindir}/obs-glcapture
 %{_bindir}/obs-gamecapture
 %{_libdir}/obs-plugins/linux-vkcapture.so
+%else
+%{_datadir}/vulkan/implicit_layer.d/obs_vkcapture_32.json
 %endif
 %{_libdir}/libVkLayer_obs_vkcapture.so
 %{_libdir}/libobs_glcapture.so
