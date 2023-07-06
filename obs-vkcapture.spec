@@ -43,7 +43,7 @@ OBS plugin for Vulkan/OpenGL game capture on Linux.
 %install
 %cmake_install
 %ifarch %{ix86}
-rm -r %{buildroot}/%{_datadir}/obs %{buildroot}/%{_bindir} %{buildroot}/%{_libdir}/obs-plugins
+rm -r %{buildroot}/%{_bindir}
 %endif
 
 %files
